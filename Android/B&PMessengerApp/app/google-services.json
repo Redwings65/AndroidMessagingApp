@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "749833624682",
+    "firebase_url": "https://bp-messenger.firebaseio.com",
+    "project_id": "bp-messenger",
+    "storage_bucket": "bp-messenger.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749833624682:android:1e790238dec6ce7f",
+        "android_client_info": {
+          "package_name": "com.example.seagerdevelopments.bpmessengerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749833624682-fa7lm6retp7572vfjac872b889os6cg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeDdJFAkQ2V1azfJgCpZL9VdALvv5VTp0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
