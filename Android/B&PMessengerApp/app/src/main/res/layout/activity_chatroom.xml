@@ -30,11 +30,12 @@
             android:layout_marginStart="16dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Message" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/button"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true">
 
@@ -42,7 +43,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:hint="This is where Messages will show up" />
         </ScrollView>
     </RelativeLayout>
 </LinearLayout>
