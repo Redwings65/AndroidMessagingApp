@@ -1,5 +1,6 @@
 package com.example.seagerdevelopments.bpmessengerapp;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +38,7 @@ public class ChatRoom extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
-
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mSendText = (Button) findViewById(R.id.button);
         mView = (TextView) findViewById(R.id.textView);
         mWriteMessage = (EditText) findViewById(R.id.editText);
@@ -46,19 +48,34 @@ public class ChatRoom extends AppCompatActivity{
         setTitle("Room - "+chat_room);
         root = FirebaseDatabase.getInstance().getReference().child(chat_room);
 
+
         mSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String,Object> myMap = new HashMap<String, Object>();
-                random_key = root.push().getKey();
-                root.updateChildren(myMap);
-                DatabaseReference messages_root = root.child(random_key);
-                Map<String,Object> myMap2 = new HashMap<String, Object>();
-                myMap2.put("name",user_name);
-                myMap2.put("message",mWriteMessage.getText().toString());
-                messages_root.updateChildren(myMap2);
+                if(!mWriteMessage.equals("")) {
+                    Map<String, Object> myMap = new HashMap<String, Object>();
+                    random_key = root.push().getKey();
+                    root.updateChildren(myMap);
+                    DatabaseReference messages_root = root.child(random_key);
+                    Map<String, Object> myMap2 = new HashMap<String, Object>();
+                    myMap2.put("name", user_name);
+                    myMap2.put("message", mWriteMessage.getText().toString());
+                    messages_root.updateChildren(myMap2);
+                    mWriteMessage.clearComposingText();
+                    mWriteMessage.setText("");
+                   // createNotiication(Calander.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Message cannot be empty",Toast.LENGTH_LONG).show();
+
+
+                }
+
             }
         });
+
+
         root.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -94,7 +111,12 @@ public class ChatRoom extends AppCompatActivity{
            message = (String) ((DataSnapshot)i.next()).getValue();
            username = (String) ((DataSnapshot)i.next()).getValue();
 
-           mView.append(username+" : "+message+"\n");
+           mView.append(username+" : "+message+"\n\n");
        }
    }
+  // private void createNotiication(long time, String text){
+   // String notificationContent= "Detail : Press to show detail";
+    //   String notificationTitle= "Notification";
+     //  Bitmap largeicon = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
+  // }
 }

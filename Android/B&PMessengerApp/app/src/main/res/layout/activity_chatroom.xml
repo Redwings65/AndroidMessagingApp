@@ -5,45 +5,64 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:textColor="@android:color/holo_orange_dark">
+
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:text="Send"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignBottom="@+id/editText"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginRight="18dp"
-            android:text="Button" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="24dp"
+            android:layout_marginEnd="24dp" />
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Message"
+            android:inputType="textPersonName"
+            android:textColorHint="@android:color/holo_orange_dark"
+            android:textColorLink="@android:color/holo_orange_dark"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/button"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Message" />
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+           />
 
         <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/button"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_height="425dp"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/editText"
+            android:background="#f99c4b">
+
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="This is where Messages will show up" />
+                android:layout_above="@+id/scrollview"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:hint="This is where Messages will show up"
+                android:textColorHint="#000" />
         </ScrollView>
+
     </RelativeLayout>
+
 </LinearLayout>
