@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">B&amp;P MessengerApp</string>
+    <string name="title_activity_notification_detail">NotificationDetailActivity</string>
 </resources>
