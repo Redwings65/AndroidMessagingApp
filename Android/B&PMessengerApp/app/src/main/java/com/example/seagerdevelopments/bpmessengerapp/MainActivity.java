@@ -93,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
     }//end of OnCreate
 
     public void request_user(){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         builder.setTitle("enter your name");
 
         final EditText input = new EditText(this);
@@ -113,5 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.show();
+
+
     }
 }//end of Class

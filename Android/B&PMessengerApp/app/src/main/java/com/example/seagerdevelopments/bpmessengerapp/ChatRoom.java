@@ -1,9 +1,18 @@
 package com.example.seagerdevelopments.bpmessengerapp;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,6 +44,7 @@ public class ChatRoom extends AppCompatActivity{
     private String user_name,chat_room;
     private DatabaseReference root;
     private String random_key;
+    public final static String NOTIFICATION_DATA = "NOTIFICATION_DATA";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +73,9 @@ public class ChatRoom extends AppCompatActivity{
                     myMap2.put("message", mWriteMessage.getText().toString());
                     messages_root.updateChildren(myMap2);
                     mWriteMessage.clearComposingText();
-                    mWriteMessage.setText("");
-                   // createNotiication(Calander.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
 
+                    createNotiication(Calendar.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
+                    mWriteMessage.setText("");
                 }
                 else{
                     Toast.makeText(getApplicationContext(),"Message cannot be empty",Toast.LENGTH_LONG).show();
@@ -114,9 +125,41 @@ public class ChatRoom extends AppCompatActivity{
            mView.append(username+" : "+message+"\n\n");
        }
    }
-  // private void createNotiication(long time, String text){
-   // String notificationContent= "Detail : Press to show detail";
-    //   String notificationTitle= "Notification";
-     //  Bitmap largeicon = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
-  // }
+   private void createNotiication(long time, String text){
+    String notificationContent= "This is a notification";
+       String notificationTitle= "You just sent a message";
+      Bitmap largeicon = BitmapFactory.decodeResource(getResources(),R.drawable.pic);
+        int smallicon = R.drawable.pic;
+
+
+       Intent intent = new Intent(getApplicationContext(),NotificationDetailActivity.class);
+       intent.putExtra(NOTIFICATION_DATA,"Detail : "+text);
+
+
+       intent.setData(Uri.parse("content://"+time));
+       PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent, Intent.FILL_IN_ACTION);
+
+       //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, Intent.FLAG_ACTIVITY_NEW_TASK);
+       NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+       NotificationCompat.Builder builder;
+       builder= new NotificationCompat.Builder(getApplicationContext());
+
+       builder.setWhen(time)
+               .setContentText(notificationContent)
+               .setContentTitle(notificationTitle)
+               .setSmallIcon(smallicon)
+               .setTicker(notificationTitle)
+               .setLargeIcon(largeicon)
+               .setDefaults(Notification.DEFAULT_LIGHTS |
+               Notification.DEFAULT_SOUND |
+               Notification.DEFAULT_VIBRATE)
+               .setContentIntent(pendingIntent);
+
+       Notification notification = builder.build();
+       notificationManager.notify((int)time,notification);
+       //NOTIFICATION_DATA=
+
+
+   }
 }
