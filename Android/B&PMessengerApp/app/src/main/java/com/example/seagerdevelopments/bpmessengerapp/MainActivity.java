@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.amazonaws.mobileconnectors.amazonmobileanalytics.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,9 +30,12 @@ import java.util.Map;
 import java.util.Set;
 
 
+
+
 public class MainActivity extends AppCompatActivity {
     private Button mButton;
     private EditText mEditText;
+    private static MobileAnalyticsManager analytics;
     private ListView mList;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list = new ArrayList<>();
@@ -49,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
         mList.setAdapter(arrayAdapter);
 
         request_user();
+        try {
+            analytics = MobileAnalyticsManager.getOrCreateInstance(
+                    this.getApplicationContext(),
+                    "7acb4c83de424ecbab514f2b3b7aad33", //Amazon Mobile Analytics App ID
+                    "us-east-1:a06d4bcb-29d4-4823-b3a9-24ca347a3fe7" //Amazon Cognito Identity Pool ID
+            );
+        } catch(InitializationException ex) {
+            Log.e(this.getClass().getName(), "Failed to initialize Amazon Mobile Analytics", ex);
+        }
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,4 +133,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(analytics != null) {
+            analytics.getSessionClient().pauseSession();
+            analytics.getEventClient().submitEvents();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(analytics != null) {
+            analytics.getSessionClient().resumeSession();
+        }
+    }
+
 }//end of Class
