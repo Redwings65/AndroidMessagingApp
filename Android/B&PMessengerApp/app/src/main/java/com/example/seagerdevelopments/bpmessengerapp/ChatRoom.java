@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.amazonmobileanalytics.MobileAnalyticsManager;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +40,7 @@ import java.util.Map;
 
 public class ChatRoom extends AppCompatActivity{
     private Button mSendText;
+    private static MobileAnalyticsManager analytics;
     private EditText mWriteMessage;
     private TextView mView;
     private String user_name,chat_room;
@@ -162,4 +164,21 @@ public class ChatRoom extends AppCompatActivity{
 
 
    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(analytics != null) {
+            analytics.getSessionClient().pauseSession();
+            analytics.getEventClient().submitEvents();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(analytics != null) {
+            analytics.getSessionClient().resumeSession();
+        }
+    }
+
 }

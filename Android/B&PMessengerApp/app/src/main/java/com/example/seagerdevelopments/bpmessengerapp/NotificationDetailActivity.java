@@ -9,8 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-public class NotificationDetailActivity extends AppCompatActivity {
+import com.amazonaws.mobileconnectors.amazonmobileanalytics.MobileAnalyticsManager;
 
+public class NotificationDetailActivity extends AppCompatActivity {
+    private static MobileAnalyticsManager analytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +37,22 @@ public class NotificationDetailActivity extends AppCompatActivity {
         //tv.setText(data);
         tv.setText(stuff);
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(analytics != null) {
+            analytics.getSessionClient().pauseSession();
+            analytics.getEventClient().submitEvents();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(analytics != null) {
+            analytics.getSessionClient().resumeSession();
+        }
+    }
+
 
 }
