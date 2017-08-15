@@ -76,7 +76,7 @@ public class ChatRoom extends AppCompatActivity{
                     myMap2.put("message", mWriteMessage.getText().toString());
                     messages_root.updateChildren(myMap2);
                     mWriteMessage.clearComposingText();
-                    //createNotiication(Calendar.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
+                    createNotiication(Calendar.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
                     mWriteMessage.setText("");
                 }
                 else{
