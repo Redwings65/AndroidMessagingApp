@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
@@ -75,8 +76,7 @@ public class ChatRoom extends AppCompatActivity{
                     myMap2.put("message", mWriteMessage.getText().toString());
                     messages_root.updateChildren(myMap2);
                     mWriteMessage.clearComposingText();
-
-                    createNotiication(Calendar.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
+                    //createNotiication(Calendar.getInstance().getTimeInMillis(),mWriteMessage.getText().toString());
                     mWriteMessage.setText("");
                 }
                 else{
@@ -89,15 +89,22 @@ public class ChatRoom extends AppCompatActivity{
         });
 
 
+
+
         root.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                 append_chat_application(dataSnapshot);
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                append_chat_application(dataSnapshot);
+
+                //append_chat_application(dataSnapshot);
+                //mView.append(username+" : "+message+"\n\n");
+
             }
 
             @Override
@@ -118,14 +125,17 @@ public class ChatRoom extends AppCompatActivity{
 
     }
     private String username,message;
-   public void append_chat_application(DataSnapshot dataSnapShot){
-       Iterator i = dataSnapShot.getChildren().iterator();
-       while(i.hasNext()){
-           message = (String) ((DataSnapshot)i.next()).getValue();
-           username = (String) ((DataSnapshot)i.next()).getValue();
 
-           mView.append(username+" : "+message+"\n\n");
-       }
+   public void append_chat_application(DataSnapshot dataSnapShot){
+
+           Iterator i = dataSnapShot.getChildren().iterator();
+           while (i.hasNext()) {
+               message = (String) ((DataSnapshot) i.next()).getValue();
+               username = (String) ((DataSnapshot) i.next()).getValue();
+
+               mView.append(username + " : " + message + "\n\n");
+           }
+
    }
    private void createNotiication(long time, String text){
     String notificationContent= "This is a notification";

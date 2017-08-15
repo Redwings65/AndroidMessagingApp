@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mList.setAdapter(arrayAdapter);
 
         request_user();
-        try {
+        /*try {
             analytics = MobileAnalyticsManager.getOrCreateInstance(
                     this.getApplicationContext(),
                     "7acb4c83de424ecbab514f2b3b7aad33", //Amazon Mobile Analytics App ID
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         } catch(InitializationException ex) {
             Log.e(this.getClass().getName(), "Failed to initialize Amazon Mobile Analytics", ex);
         }
-
+*/
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,18 +136,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(analytics != null) {
+        /*if(analytics != null) {
             analytics.getSessionClient().pauseSession();
             analytics.getEventClient().submitEvents();
         }
+        */
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(analytics != null) {
+        /*if(analytics != null) {
             analytics.getSessionClient().resumeSession();
         }
+        */
     }
 
 }//end of Class
